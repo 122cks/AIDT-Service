@@ -5,29 +5,64 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1" />
 	<title>공지사항 - AIDT 교육자료 안내</title>
 	<style>
-		body { font-family: -apple-system, BlinkMacSystemFont, "Malgun Gothic", "맑은 고딕", sans-serif; margin:0; background:#fafafa; color:#222 }
-		.wrap { max-width:900px; margin:40px auto; background:#fff; border:1px solid #eee; border-radius:8px; overflow:hidden }
-		.hd { padding:28px 32px; border-bottom:1px solid #f2f2f2 }
-		.hd h1 { margin:0; font-size:20px; color:#d31b7a }
-		.meta { margin-top:8px; color:#888; font-size:13px }
-		.content { padding:26px 32px; line-height:1.8; color:#444 }
-		.content p { margin:12px 0 }
-		.btns { margin-top:18px }
-		.btn { display:inline-block; padding:10px 14px; border-radius:8px; background:#d31b7a; color:#fff; text-decoration:none; margin-right:8px }
-		.links { margin-top:14px; font-size:14px }
-		.links a { color:#d31b7a; text-decoration:none }
-		.foot { padding:18px 32px; border-top:1px solid #f2f2f2; color:#777; font-size:13px }
+		:root { --accent: #d31b7a; --muted:#777; --bg:#fafafa; }
+		html,body{margin:0;padding:0;background:var(--bg);font-family: -apple-system,BlinkMacSystemFont,"Malgun Gothic","맑은 고딕",sans-serif;color:#222}
+		.container{max-width:1024px;margin:36px auto;padding:0 20px}
+		.card{background:#fff;border:1px solid #f0e9ef;border-radius:10px;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,0.03)}
+		.card .hd{padding:28px 28px;border-bottom:1px solid #f6eef5}
+		.card .hd h1{margin:0;color:var(--accent);font-size:20px;font-weight:800}
+		.meta{margin-top:8px;color:var(--muted);font-size:13px}
+		.body{padding:22px 28px;line-height:1.85;color:#444}
+		.body p{margin:12px 0}
+		.btn-row{margin-top:18px;display:flex;gap:10px}
+		.btn{display:inline-block;padding:10px 14px;border-radius:10px;text-decoration:none;font-weight:700}
+		.btn.primary{background:var(--accent);color:#fff}
+		.btn.ghost{background:#fff;border:1px solid rgba(211,27,122,0.12);color:var(--accent)}
+		.links{margin-top:14px;font-size:14px}
+		.links a{color:var(--accent);text-decoration:none}
+		.foot{padding:16px 28px;border-top:1px solid #f6eef5;color:var(--muted);font-size:13px}
+		@media(max-width:640px){.hd,.body,.foot{padding:18px}}
 	</style>
 </head>
 <body>
-	<div class="wrap">
-		<header class="hd">
-			<h1>AIDT 교육자료 안내</h1>
-			<div class="meta">게시일: 2026-01-13</div>
-		</header>
-		<article class="content">
-			<p>안녕하세요. AIDT 교육자료 서비스 담당자입니다.</p>
-			<p>다음과 같이 AIDT에서 제공하는 교육자료 및 초등/중등/고등별 자료 링크를 안내드립니다. 해당 자료는 학교 및 교육기관에서 활용 가능한 공용 교육콘텐츠입니다.</p>
+	<div class="container">
+		<div class="card">
+			<header class="hd">
+				<h1>AIDT 교육자료 안내</h1>
+				<div class="meta">게시일: 2026-01-13</div>
+			</header>
+
+			<article class="body">
+				<p>안녕하세요. AIDT 교육자료 서비스 담당자입니다.</p>
+				<p>선생님들의 원활한 수업 준비를 돕기 위해, <strong>AIDT 디지털 교육자료</strong>의 핵심 활용 자료를 모아 안내드립니다.
+				아래 링크를 통해 초등·중등·고등용 뷰어와 자료를 확인하실 수 있습니다.</p>
+
+				<div class="btn-row">
+					<a class="btn primary" href="https://aidt.example.org/intro" target="_blank" rel="noopener">AIDT 교육자료 소개</a>
+					<a class="btn ghost" href="https://aidt.example.org/downloads" target="_blank" rel="noopener">자료 다운로드 센터</a>
+				</div>
+
+				<div class="links">
+					<p>초등: <a href="https://viewer.cmass.kr/html/aidt/aidt_e/view_aidt_e.html" target="_blank">https://viewer.cmass.kr/html/aidt/aidt_e/view_aidt_e.html</a></p>
+					<p>중등: <a href="https://viewer.cmass.kr/html/aidt/aidt_m/view_aidt_m.html" target="_blank">https://viewer.cmass.kr/html/aidt/aidt_m/view_aidt_m.html</a></p>
+					<p>고등: <a href="https://viewer.cmass.kr/html/aidt/aidt_h/view_aidt_h.html" target="_blank">https://viewer.cmass.kr/html/aidt/aidt_h/view_aidt_h.html</a></p>
+				</div>
+
+				<h4 style="margin-top:18px;color:var(--accent)">제공 자료 안내</h4>
+				<ul style="margin:8px 0 0 18px;color:#444">
+					<li>활용 가이드: 수업 현장에서 AIDT를 효과적으로 활용하는 실전 팁 수록</li>
+					<li>교사용/학생용 매뉴얼: 단계별 기능 설명과 예시 수록</li>
+					<li>동영상: 주요 인터페이스 사용법을 영상으로 제공</li>
+				</ul>
+
+				<p style="margin-top:14px">서비스 이용 관련 문의는 고객센터 또는 아래 연락처로 문의해 주세요.</p>
+			</article>
+
+			<footer class="foot">문의: aidt-support@example.org · 전화: 02-000-0000</footer>
+		</div>
+	</div>
+</body>
+</html>
 
 			<p><strong>자료 안내</strong></p>
 			<p>아래 링크에서 AIDT 교육자료 소개 페이지와 초등/중등/고등용 자료를 확인하실 수 있습니다. 자료는 PDF 및 온라인 뷰어 형식으로 제공됩니다.</p>
