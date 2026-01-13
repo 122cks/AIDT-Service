@@ -1,0 +1,600 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>고객센터 | 자주하는 질문</title>
+    <style>
+        :root {
+            --accent: #d31b7a;
+            --text: #333;
+            --muted: #777;
+            --line: #ececec;
+            --bg: #fafafa;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { height: 100%; }
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Malgun Gothic", "맑은 고딕", "Apple SD Gothic Neo", sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Top header */
+        .topbar {
+            background: #fff;
+            border-bottom: 1px solid #e5e5e5;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+        }
+        .topbar .inner {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 14px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .brand .logo {
+            color: var(--accent);
+            font-size: 22px;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+        }
+        .brand .sub {
+            color: #111;
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+        }
+        .topnav {
+            display: flex;
+            gap: 8px;
+            color: #555;
+            font-size: 13px;
+            align-items: center;
+        }
+        .topnav a { 
+            color: #555; 
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .topnav a:hover { color: var(--accent); }
+        .topnav .dot { color: #ccc; font-size: 10px; }
+
+        /* Hero section */
+        .hero {
+            position: relative;
+            background: linear-gradient(135deg, #fefefe 0%, #f9f9f9 100%);
+            border-bottom: 1px solid #e8e8e8;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: "";
+            position: absolute;
+            right: -200px;
+            top: -200px;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle at center, rgba(211, 27, 122, 0.06), transparent 70%);
+            pointer-events: none;
+        }
+        .hero .inner {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 52px 24px 48px;
+            position: relative;
+            z-index: 1;
+        }
+        .hero h1 {
+            margin: 0;
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: -0.8px;
+            color: #1a1a1a;
+        }
+
+        /* Main layout */
+        .main {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 40px 24px 80px;
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 40px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            padding-top: 4px;
+        }
+        .side-list {
+            list-style: none;
+        }
+        .side-list li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 13px 8px;
+            color: #777;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-radius: 4px;
+        }
+        .side-list li:hover {
+            background: #f5f5f5;
+            color: #333;
+        }
+        .side-list li.active {
+            color: var(--accent);
+            font-weight: 700;
+        }
+        .side-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #d0d0d0;
+            flex-shrink: 0;
+        }
+        .side-list li.active .side-dot { 
+            background: var(--accent);
+            box-shadow: 0 0 0 3px rgba(211, 27, 122, 0.15);
+        }
+        .side-list a { color: inherit; text-decoration: none; display: flex; align-items: center; gap: 12px; }
+
+        /* Content area */
+        .content {
+            min-width: 0;
+        }
+        .section-title {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin: 0 0 20px;
+            color: #1a1a1a;
+        }
+        
+        /* Search toolbar */
+        .toolbar {
+            border: 1px solid #ddd;
+            border-radius: 24px;
+            background: #fff;
+            padding: 8px 8px 8px 0;
+            display: flex;
+            align-items: stretch;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+        }
+        .select {
+            position: relative;
+            flex-shrink: 0;
+            border-right: 1px solid #e8e8e8;
+        }
+        .select select {
+            appearance: none;
+            border: 0;
+            outline: 0;
+            background: transparent;
+            padding: 12px 36px 12px 20px;
+            font-size: 14px;
+            color: #333;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        .select::after {
+            content: "▼";
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+            font-size: 10px;
+            pointer-events: none;
+        }
+        .search {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            padding: 0 16px;
+        }
+        .search input {
+            flex: 1;
+            border: 0;
+            outline: 0;
+            font-size: 14px;
+            padding: 12px 8px;
+            color: #333;
+        }
+        .search input::placeholder {
+            color: #aaa;
+        }
+        .search button {
+            border: 0;
+            background: transparent;
+            cursor: pointer;
+            color: #999;
+            font-size: 18px;
+            padding: 6px 10px;
+            transition: color 0.2s;
+        }
+        .search button:hover { color: #555; }
+
+        /* FAQ items */
+        .faq {
+            margin-top: 8px;
+        }
+        details.faq-item {
+            border: 1px solid #e8e8e8;
+            border-radius: 6px;
+            background: #fff;
+            margin-bottom: 8px;
+            overflow: hidden;
+            transition: box-shadow 0.2s, border-color 0.2s;
+        }
+        details.faq-item:hover {
+            border-color: #ddd;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        details.faq-item[open] {
+            border-color: var(--accent);
+            box-shadow: 0 3px 12px rgba(211, 27, 122, 0.08);
+        }
+        details.faq-item summary {
+            list-style: none;
+            cursor: pointer;
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 15px;
+            color: #222;
+            background: #fff;
+            transition: background 0.2s;
+        }
+        details.faq-item summary:hover {
+            background: #fafafa;
+        }
+        details.faq-item summary::-webkit-details-marker { display: none; }
+        .faq-q {
+            flex: 1;
+            line-height: 1.5;
+            font-weight: 500;
+            letter-spacing: -0.2px;
+        }
+        .faq-chip {
+            font-size: 12px;
+            color: #777;
+            border: 1px solid #e0e0e0;
+            background: #fafafa;
+            padding: 5px 12px;
+            border-radius: 14px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .faq-arrow {
+            color: #aaa;
+            font-size: 12px;
+            flex-shrink: 0;
+            transition: transform 0.25s ease;
+        }
+        details[open] .faq-arrow { 
+            transform: rotate(180deg);
+        }
+        .faq-a {
+            border-top: 1px solid #f0f0f0;
+            padding: 20px 20px 22px;
+            color: #555;
+            font-size: 14px;
+            line-height: 1.8;
+            background: #fafafa;
+            letter-spacing: -0.1px;
+        }
+        .faq-a strong { 
+            color: #222;
+            font-weight: 600;
+        }
+
+        /* Pagination */
+        .pager {
+            display: flex;
+            gap: 6px;
+            margin-top: 28px;
+            align-items: center;
+            justify-content: center;
+        }
+        .pager button {
+            min-width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 1px solid #e0e0e0;
+            background: #fff;
+            color: #666;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .pager button:hover {
+            border-color: #ccc;
+            background: #f8f8f8;
+        }
+        .pager button.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+            font-weight: 700;
+            box-shadow: 0 2px 6px rgba(211, 27, 122, 0.25);
+        }
+
+        /* Footer note */
+        .footer-note {
+            margin-top: 32px;
+            background: #fff;
+            border: 1px solid #e8e8e8;
+            border-radius: 8px;
+            padding: 20px 24px;
+            color: #666;
+            line-height: 1.75;
+            font-size: 14px;
+            letter-spacing: -0.1px;
+        }
+        .footer-note .title {
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 15px;
+            margin-bottom: 8px;
+        }
+
+        @media (max-width: 900px) {
+            .main { 
+                grid-template-columns: 1fr; 
+                gap: 24px;
+                padding: 24px 16px 60px;
+            }
+            .sidebar { display: none; }
+            .toolbar { 
+                flex-direction: column;
+                border-radius: 16px;
+            }
+            .select {
+                border-right: 0;
+                border-bottom: 1px solid #e8e8e8;
+            }
+        }
+        @media (max-width: 520px) {
+            details.faq-item summary {
+                flex-wrap: wrap;
+            }
+            .faq-chip {
+                order: -1;
+                width: 100%;
+                margin-bottom: 8px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="topbar" role="banner">
+        <div class="inner">
+            <div class="brand" aria-label="CMASS 교과서">
+                <div class="logo">씨마스</div>
+                <div class="sub">교과서</div>
+            </div>
+            <nav class="topnav" aria-label="상단 메뉴(미리보기)">
+                <a href="#">로그인</a>
+                <span class="dot">•</span>
+                <a href="#">회원가입</a>
+                <span class="dot">•</span>
+                <a href="#">즐겨찾기</a>
+                <span class="dot">•</span>
+                <a href="#">고객센터</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero" aria-label="고객센터 헤더">
+        <div class="inner">
+            <h1>고객센터</h1>
+        </div>
+    </section>
+
+    <main class="main" role="main">
+        <aside class="sidebar" aria-label="고객센터 좌측 메뉴">
+            <ul class="side-list">
+                <li><a href="#"><span class="side-dot"></span>공지사항</a></li>
+                <li><a href="#"><span class="side-dot"></span>이벤트</a></li>
+                <li><a href="#"><span class="side-dot"></span>이용안내</a></li>
+                <li class="active"><a href="AIDT교육자료_FAQ.html"><span class="side-dot"></span>자주하는 질문</a></li>
+                <li><a href="#"><span class="side-dot"></span>1:1 문의</a></li>
+                <li><a href="#"><span class="side-dot"></span>견본 신청 확인</a></li>
+                <li><a href="#"><span class="side-dot"></span>도서 오류 신고</a></li>
+                <li><a href="AIDT교육자료_공지사항.html"><span class="side-dot"></span>AIDT 교육자료</a></li>
+            </ul>
+        </aside>
+
+        <section class="content" aria-label="자주하는 질문 본문">
+            <h2 class="section-title">자주하는 질문</h2>
+            <div class="toolbar" aria-label="검색 및 필터">
+                <div class="select">
+                    <select aria-label="카테고리 선택">
+                        <option>전체</option>
+                        <option selected>AIDT교육자료</option>
+                        <option>회원가입/회원정보</option>
+                        <option>사이트 이용</option>
+                        <option>자료 이용</option>
+                    </select>
+                </div>
+                <div class="search">
+                    <input type="search" placeholder="검색" aria-label="검색" />
+                    <button type="button" aria-label="검색">⌕</button>
+                </div>
+            </div>
+
+            <div class="faq" role="list">
+                <details class="faq-item" role="listitem">
+                    <summary>
+                        <span class="faq-q">AI 디지털 교육자료는 어떻게 이용할 수 있나요?</span>
+                        <span class="faq-chip">AIDT 교육자료</span>
+                        <span class="faq-arrow">▾</span>
+                    </summary>
+                    <div class="faq-a">
+                        학교에서 안내받은 전용 웹사이트(플랫폼)에 접속하여 이용하실 수 있습니다. 별도의 복잡한 회원가입 절차 없이,
+                        학교를 통해 발급받은 <strong>‘에듀넷 티클리어’ 계정</strong>이나 <strong>교육청 통합 계정(SSO)</strong>으로 로그인하면
+                        배정된 학습 자료와 교과서를 즉시 확인하고 학습할 수 있습니다.
+                    </div>
+                </details>
+
+                <details class="faq-item" role="listitem">
+                    <summary>
+                        <span class="faq-q">사용하려면 별도의 프로그램 설치가 필요한가요?</span>
+                        <span class="faq-chip">AIDT 교육자료</span>
+                        <span class="faq-arrow">▾</span>
+                    </summary>
+                    <div class="faq-a">
+                        기본적으로는 웹 브라우저(크롬, 웨일, 엣지 등)를 통해 바로 접속하는 방식(SaaS)이므로 <strong>별도 프로그램 설치가 필요 없습니다.</strong>
+                        <br /><br />
+                        다만 일부 고화질 실감형 콘텐츠(VR/AR)나 오프라인 기능을 원활하게 이용하기 위해 전용 뷰어 앱 설치를 권장할 수 있으며,
+                        이 경우 로그인 시 설치 안내가 제공됩니다.
+                    </div>
+                </details>
+
+                <details class="faq-item" role="listitem">
+                    <summary>
+                        <span class="faq-q">이용 금액은 얼마인가요?</span>
+                        <span class="faq-chip">AIDT 교육자료</span>
+                        <span class="faq-arrow">▾</span>
+                    </summary>
+                    <div class="faq-a">
+                        공교육 과정 내에서 활용되는 AI 디지털교과서 및 교육자료는 학교와 교육청이 구독 계약을 맺고 제공하는 서비스입니다.
+                        따라서 <strong>학생과 학부모에게 별도의 구독료나 콘텐츠 이용 요금이 청구되지 않습니다.</strong>
+                    </div>
+                </details>
+
+                <details class="faq-item" role="listitem">
+                    <summary>
+                        <span class="faq-q">어떤 기기에서 사용할 수 있나요? (스마트폰도 가능한가요?)</span>
+                        <span class="faq-chip">AIDT 교육자료</span>
+                        <span class="faq-arrow">▾</span>
+                    </summary>
+                    <div class="faq-a">
+                        인터넷 접속이 가능한 대부분의 기기(PC, 노트북, 태블릿, 스마트폰)에서 이용 가능합니다.
+                        다만 AI 맞춤형 문제 풀이와 학습 분석 화면을 원활하게 이용하기 위해 <strong>태블릿 또는 PC 사용을 권장</strong>합니다.
+                    </div>
+                </details>
+
+                <details class="faq-item" role="listitem">
+                    <summary>
+                        <span class="faq-q">기존 전자책(e-Book)이랑 무엇이 다른가요?</span>
+                        <span class="faq-chip">AIDT 교육자료</span>
+                        <span class="faq-arrow">▾</span>
+                    </summary>
+                    <div class="faq-a">
+                        단순 열람을 넘어 <strong>AI가 학습 결과(정답률, 풀이 시간, 오답 유형 등)를 분석</strong>하여 학생 수준에 맞는 보충/심화 콘텐츠를 추천합니다.
+                        학습 기록이 축적되어, 학습 경향을 보고 다음 학습을 설계하는 데 도움을 줍니다.
+                    </div>
+                </details>
+
+                <details class="faq-item" role="listitem">
+                    <summary>
+                        <span class="faq-q">로그인 아이디와 비밀번호를 잊어버렸어요.</span>
+                        <span class="faq-chip">AIDT 교육자료</span>
+                        <span class="faq-arrow">▾</span>
+                    </summary>
+                    <div class="faq-a">
+                        학생 개인정보 보호를 위해 계정 정보는 학교 시스템과 연동되어 관리됩니다.
+                        비밀번호를 분실하신 경우 로그인 화면의 ‘비밀번호 찾기’를 이용하시거나, <strong>담임 선생님께 문의</strong>하시면
+                        학교 정책에 따라 초기화 및 재설정을 안내받을 수 있습니다.
+                    </div>
+                </details>
+
+                <details class="faq-item" role="listitem">
+                    <summary>
+                        <span class="faq-q">집에서 사용할 때 데이터 요금은 어떻게 되나요?</span>
+                        <span class="faq-chip">AIDT 교육자료</span>
+                        <span class="faq-arrow">▾</span>
+                    </summary>
+                    <div class="faq-a">
+                        학교 내 무선망(Wi-Fi) 환경에서는 데이터 비용이 발생하지 않습니다.
+                        가정이나 외부에서 이용하실 때는 사용 중인 인터넷/통신 요금제의 데이터 정책에 따르므로,
+                        가급적 <strong>와이파이(Wi‑Fi) 환경에서 접속</strong>하시는 것을 권장합니다.
+                    </div>
+                </details>
+
+                <details class="faq-item" role="listitem">
+                    <summary>
+                        <span class="faq-q">서비스 이용 중 화면이 멈추거나 접속이 안 될 때는 어떻게 해야 하나요?</span>
+                        <span class="faq-chip">AIDT 교육자료</span>
+                        <span class="faq-arrow">▾</span>
+                    </summary>
+                    <div class="faq-a">
+                        일시적인 네트워크 오류일 수 있습니다. 인터넷 연결 상태를 확인한 뒤 <strong>새로고침(F5)</strong>을 눌러 주세요.
+                        문제가 지속되면 브라우저 캐시(임시파일) 삭제 후 재로그인해 보시고, 계속 발생 시 고객센터(헬프데스크)로 문의해 주세요.
+                    </div>
+                </details>
+
+                <details class="faq-item" role="listitem">
+                    <summary>
+                        <span class="faq-q">AI가 추천하는 맞춤형 문제는 어떻게 제공되나요?</span>
+                        <span class="faq-chip">AIDT 교육자료</span>
+                        <span class="faq-arrow">▾</span>
+                    </summary>
+                    <div class="faq-a">
+                        학생이 학습 활동(문제 풀이, 퀴즈, 평가 등)을 진행하면 AI가 정답률, 소요 시간, 오답 유형 등을 분석합니다.
+                        분석 결과를 바탕으로 <strong>취약 영역 보충</strong> 또는 <strong>심화·탐구 학습</strong>을 추천하는 방식으로 제공됩니다.
+                    </div>
+                </details>
+
+                <details class="faq-item" role="listitem">
+                    <summary>
+                        <span class="faq-q">선생님용 계정과 학생용 계정은 어떻게 다른가요?</span>
+                        <span class="faq-chip">AIDT 교육자료</span>
+                        <span class="faq-arrow">▾</span>
+                    </summary>
+                    <div class="faq-a">
+                        <strong>학생용 계정</strong>은 학습 자료 열람, 문제 풀이, AI 추천, 학습 기록 저장 중심입니다.
+                        <strong>선생님용 계정</strong>은 여기에 더해 학급/학생 관리, 학습 현황 대시보드, 과제/평가 관리 등 관리 기능을 제공합니다.
+                        (세부 제공 범위는 학교/교육청 운영 정책에 따라 달라질 수 있습니다.)
+                    </div>
+                </details>
+            </div>
+
+            <div class="pager" aria-label="페이지네이션(미리보기)">
+                <button class="active" type="button" aria-current="page">1</button>
+                <button type="button">2</button>
+                <button type="button">3</button>
+                <button type="button">4</button>
+                <button type="button" aria-label="다음">›</button>
+            </div>
+
+            <div class="footer-note" aria-label="추가 문의 안내">
+                <div class="title">추가 문의 사항이 있으신가요?</div>
+                위 FAQ에서 해결되지 않은 문의사항은 <strong>고객센터 1:1 문의</strong>를 이용하시거나,
+                학교를 통해 안내받은 <strong>헬프데스크 연락처</strong>로 문의해 주시기 바랍니다.
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // UX: 한 번에 하나만 열리게(원본 UX에 가까운 느낌)
+        const items = Array.from(document.querySelectorAll('details.faq-item'));
+        items.forEach((item) => {
+            item.addEventListener('toggle', () => {
+                if (!item.open) return;
+                items.forEach((other) => {
+                    if (other !== item) other.open = false;
+                });
+            });
+        });
+    </script>
+</body>
+</html>
